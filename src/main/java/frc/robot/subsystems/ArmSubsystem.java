@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.controller.ProfiledPIDController;
 import frc.robot.Constants.ArmConstants;
@@ -12,15 +11,12 @@ import edu.wpi.first.wpilibj.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmSubsystem extends ProfiledPIDSubsystem {
-  private final TalonFX m_motor = new TalonFX(ArmConstants.kMotorPort);
-  private final Encoder m_encoder =
-      new Encoder(ArmConstants.kEncoderPorts[0], ArmConstants.kEncoderPorts[1]);
+  private final WPI_TalonFX m_motor = new WPI_TalonFX(ArmConstants.kMotorPort);
   private final ArmFeedforward m_feedforward =
       new ArmFeedforward(
           ArmConstants.kSVolts, ArmConstants.kCosVolts,
@@ -37,7 +33,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                 ArmConstants.kMaxVelocityRadPerSecond,
                 ArmConstants.kMaxAccelerationRadPerSecSquared)),
         0);
-    m_encoder.setDistancePerPulse(ArmConstants.kEncoderDistancePerPulse);
     // Start arm at rest in neutral position
     setGoal(ArmConstants.kArmOffsetRads);
   }
@@ -61,6 +56,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return m_encoder.getDistance() + ArmConstants.kArmOffsetRads;
+    return m_motor.getSelectedSensorPosition()/ArmConstants.kEncoderDistancePerPulse + ArmConstants.kArmOffsetRads;
   }  
 }
