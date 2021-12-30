@@ -43,13 +43,13 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   }
 
   public void robotInit() {
-			/* newer config API */
-			TalonFXConfiguration configs = new TalonFXConfiguration();
-			/* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
-			configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
-			/* config all the settings */
-			m_motor.configAllSettings(configs);
-		}
+		/* newer config API */
+		TalonFXConfiguration configs = new TalonFXConfiguration();
+		/* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
+		configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
+		/* config all the settings */
+		m_motor.configAllSettings(configs);
+	}
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
