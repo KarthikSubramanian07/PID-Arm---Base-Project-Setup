@@ -42,16 +42,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Move the arm to 2 radians above horizontal when the 'A' button is pressed.
-    new JoystickButton(m_driverController, Button.kA.value)
+    new JoystickButton(m_driverController, 3)
         .whenPressed(
             () -> {
-              m_robotArm.setGoal(2);
+              m_robotArm.setGoal(Math.PI/2);
               m_robotArm.enable();
             },
             m_robotArm);
 
     // Move the arm to neutral position when the 'B' button is pressed.
-    new JoystickButton(m_driverController, Button.kB.value)
+    new JoystickButton(m_driverController, 4)
         .whenPressed(
             () -> {
               m_robotArm.setGoal(Constants.ArmConstants.kArmOffsetRads);
@@ -60,7 +60,7 @@ public class RobotContainer {
             m_robotArm);
 
     // Disable the arm controller when Y is pressed.
-    new JoystickButton(m_driverController, Button.kY.value).whenPressed(m_robotArm::disable);
+    new JoystickButton(m_driverController, 5).whenPressed(m_robotArm::disable);
   }
 
   /**
