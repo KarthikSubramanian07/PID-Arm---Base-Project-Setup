@@ -33,18 +33,16 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                 ArmConstants.kMaxVelocityRadPerSecond,
                 ArmConstants.kMaxAccelerationRadPerSecSquared)),
         0);
-    // Start arm at rest in neutral position
-    setGoal(ArmConstants.kArmOffsetRads);
-  }
 
-  public void robotInit() {
-		/* newer config API */
-		TalonFXConfiguration configs = new TalonFXConfiguration();
+    TalonFXConfiguration configs = new TalonFXConfiguration();
 		/* select integ-sensor for PID0 (it doesn't matter if PID is actually used) */
 		configs.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
 		/* config all the settings */
-		m_motor.configAllSettings(configs);
-	}
+    m_motor.configAllSettings(configs);
+    m_motor.setSelectedSensorPosition(0);
+    // Start arm at rest in neutral position
+    setGoal(ArmConstants.kArmOffsetRads);
+  }
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
@@ -56,6 +54,15 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    return m_motor.getSelectedSensorPosition()/ArmConstants.kEncoderDistancePerPulse + ArmConstants.kArmOffsetRads;
+    return m_motor.getSelectedSensorPosition() * ArmConstants.kEncoderDistancePerPulse + ArmConstants.kArmOffsetRads;
   }  
+
+  @Override
+  public void periodic() {
+    // TODO Auto-generated method stub
+    super.periodic();
+    double encoder_pos = m_motor.getSelectedSensorPosition();
+    double measurement = getMeasurement();
+    // System.out.println("Set point: " + getController().getGoal().position);
+  }
 }
