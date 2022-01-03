@@ -16,24 +16,25 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kMotorPort = 4;
 
-    public static final double kP = 1;
+    public static final double kP = 0.0000000085428;
 
     // These are fake gains; in actuality these must be determined individually for each robot
-    public static final double kSVolts = 1;
-    public static final double kCosVolts = 1;
-    public static final double kVVoltSecondPerRad = 0.5;
-    public static final double kAVoltSecondSquaredPerRad = 0.1;
+    public static final double kSVolts = 0.90671;
+    public static final double kCosVolts = -0.0054064;
+    public static final double kVVoltSecondPerRad = 0.032771;
+    public static final double kAVoltSecondSquaredPerRad = 0.000043234;
 
-    public static final double kMaxVelocityRadPerSecond = 3;
-    public static final double kMaxAccelerationRadPerSecSquared = 10;
+    public static final double kMaxVelocityRadPerSecond = 0.5;
+    public static final double kMaxAccelerationRadPerSecSquared = 2;
 
-    public static final int[] kEncoderPorts = new int[] {4, 5};
-    public static final int kEncoderPPR = 256;
-    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
+    public static final int kEncoderPPR = 2048;
+    public static final int kGearRatio = 6;
+    
+    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR / kGearRatio;
 
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
-    public static final double kArmOffsetRads = 0.5;
+    public static final double kArmOffsetRads = 0;
   }
 
   public static final class AutoConstants {
@@ -42,6 +43,6 @@ public final class Constants {
   }
 
   public static final class OIConstants {
-    public static final int kDriverControllerPort = 1;
+    public static final int kDriverControllerPort = 0;
   }
 }
